@@ -1,18 +1,22 @@
-import React from 'react'
+import { React } from 'react'
+import Main from './components/Main/Main'
+import HeadPanel from './components/HeadPanel/HeadPanel'
 import './App.css'
+import { useDispatch } from 'react-redux'
+import { setUsersToken } from './Redux_Store/ArticlesState/ArticlesState'
+import { BrowserRouter as Router } from 'react-router-dom'
 
 function App() {
+    const dispatch = useDispatch()
+    function takeTokenNumber(tokenNumber) {
+        dispatch(setUsersToken(tokenNumber))
+    }
+
     return (
-        <div>
-            <header>
-                <p>
-                    Edit <code>src/App.js</code> and save to reload.
-                </p>
-                <a className="App-link" href="https://reactjs.org" target="_blank" rel="noopener noreferrer">
-                    Learn React
-                </a>
-            </header>
-        </div>
+        <Router>
+            <HeadPanel takeTokenNumber={takeTokenNumber} />
+            <Main />
+        </Router>
     )
 }
 

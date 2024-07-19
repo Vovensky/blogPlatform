@@ -1,0 +1,50 @@
+.article {
+    width: 940px;
+    height: 140px;
+    display: flex;
+    background-color: white;
+    margin-bottom: 20px;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.article__info {
+    flex-grow: 3;
+    max-width: 680px;
+}
+
+.article__userInfo {
+    flex-grow: 1;
+    display: flex;
+    justify-content: end;
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 28px;
+}
+
+.userInfo__image {
+    width: 46px;
+    height: 46px;
+    margin-left: 10px;
+    border-radius: 50%;
+}
+
+.article__title {
+    color: rgba(24, 144, 255, 1);
+    height: 28px;
+    font-size: 20px;
+    line-height: 28px;
+}
+
+.article__content {
+    color: red;
+}
+
+.article__tags {
+    display: flex;
+    gap: 10px;
+}
+
+.article__tag {
+    border: 1px solid gray;
+}
