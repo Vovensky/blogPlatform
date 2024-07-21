@@ -6,6 +6,7 @@ import classes from './Main.module.scss'
 
 import ArticlesList from '../ArticlesList/ArticlesList'
 import ArticleDetails from '../ArticlesList/ArticleDetails/ArticleDetails'
+import AuthWindow from '../HeadPanel/AuthWindow/AuthWindow'
 
 export default function Main() {
     const token = useSelector((state) => state.articlesState.token)
@@ -32,18 +33,17 @@ export default function Main() {
                         return <ArticleDetails {...match} />
                     }}
                 />
-
-                <Route path="/">
+                <Route path="/" exact>
                     <ArticlesList />
                 </Route>
                 <Route path="/articles">
                     <ArticlesList />
                 </Route>
                 <Route path="/sign-in">
-                    <div className={classes.articlesList}>Sign-IN</div>
+                    <AuthWindow lever={false} />
                 </Route>
                 <Route path="/sign-up">
-                    <div className={classes.articlesList}>Sign-UP</div>
+                    <AuthWindow lever={true} />
                 </Route>
             </Switch>
         </main>

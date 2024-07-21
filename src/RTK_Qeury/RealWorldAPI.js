@@ -6,7 +6,7 @@ export const RealWorldAPI = createApi({
     endpoints: (builder) => ({
         getArticles: builder.query({
             query: () => ({
-                url: 'articles?limit=115&offset=0',
+                url: 'articles?limit=15&offset=0',
                 limit: 5,
             }),
         }),
