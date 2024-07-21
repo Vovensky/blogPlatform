@@ -16,15 +16,18 @@ const articlesState = createSlice({
             })
             return { ...state, articles: obj }
         },
-        setUsersToken(state, action) {
+        setUsersData(state, action) {
+            console.log(action)
             return {
                 ...state,
-                token: action.payload,
+                token: action.payload.token,
                 isLoggedIn: true,
+                username: action.payload.username,
+                email: action.payload.email,
             }
         },
     },
 })
 
-export const { setArticlesSet, setUsersToken } = articlesState.actions
+export const { setArticlesSet, setUsersData } = articlesState.actions
 export default articlesState.reducer

@@ -15,6 +15,13 @@ export const RealWorldAPI = createApi({
         }),
         postNewUser: builder.mutation({
             query: (body) => ({
+                url: 'users',
+                method: 'POST',
+                body,
+            }),
+        }),
+        logIn: builder.mutation({
+            query: (body) => ({
                 url: 'users/login',
                 method: 'POST',
                 body,
@@ -25,4 +32,4 @@ export const RealWorldAPI = createApi({
 
 // Export hooks for usage in functional components, which are
 // auto-generated based on the defined endpoints
-export const { useGetAccessTokenQuery, useGetArticlesQuery, usePostNewUserMutation } = RealWorldAPI
+export const { useGetAccessTokenQuery, useGetArticlesQuery, usePostNewUserMutation, useLogInMutation } = RealWorldAPI

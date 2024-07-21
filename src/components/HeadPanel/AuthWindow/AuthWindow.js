@@ -1,11 +1,11 @@
 import { React, useState } from 'react'
-import { useSelector } from 'react-redux'
-import { Link } from 'react-router-dom'
+import { useSelector, useDispatch } from 'react-redux'
+import { Link, Redirect } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import classes from './AuthWindow.module.scss'
 import { useForm } from 'react-hook-form'
-import { usePostNewUserMutation } from '../../../RTK_Qeury/RealWorldAPI'
-import { setUsersToken } from '../../../Redux_Store/ArticlesState/ArticlesState'
+import { usePostNewUserMutation, useLogInMutation } from '../../../RTK_Qeury/RealWorldAPI'
+import { setUsersData } from '../../../Redux_Store/ArticlesState/ArticlesState'
 
 export default function AuthWindow(props) {
     const {
@@ -18,33 +18,62 @@ export default function AuthWindow(props) {
         mode: 'onBlur',
     })
 
-    const [f, { isError }] = usePostNewUserMutation()
+    const { isLoggedIn } = useSelector((state) => state.articlesState)
 
-    // const { takeTokenNumber } = props
-    // const [loggedIn, setLoggedIn] = useState('false')
-    // const isLoggedIn = useSelector((state) => state.articlesState.isLoggedIn)
-    // const [f, { isError }] = usePostNewUserMutation({
-    //     user: {
-    //         username: 'zaloopa ivanovna',
-    //         email: 'zaloopa@gmail.com',
-    //         password: 'zaloopa_ivanovna@gmail.com',
-    //     },
-    // })
+    const dispatch = useDispatch()
 
-    async function handleFunction(data) {
+    const [f, { isError, error: riteError }] = usePostNewUserMutation()
+
+    async function registerNewUser(data) {
         const { email, password, userName: username } = data
         const obj = {
             user: {
-                email,
-                password,
-                username,
+                email: email.toLowerCase(),
+                password: password.toLowerCase(),
+                username: username.toLowerCase(),
             },
         }
         console.log(email, password, username)
         try {
             if (isError) console.log(`Error in user object`)
+            console.log(error)
             const result = await f(obj)
-            console.log(result)
+            if (result.data) {
+                const { email, username, token } = result.data.user
+                dispatch(setUsersData({ email: email, username: username, token: token }))
+            } else if (result.error) {
+                const { data } = result.error
+
+                const arr = Object.entries(data.errors).map((elem) => elem.join(' '))
+                alert(arr)
+            }
+        } catch (err) {
+            console.log(err)
+        }
+        reset()
+    }
+
+    const [func, { isError: error }] = useLogInMutation()
+    async function logIn(data) {
+        const { email, password } = data
+        const obj = {
+            user: {
+                email: email.toLowerCase(),
+                password: password.toLowerCase(),
+            },
+        }
+        try {
+            if (error) console.log(`Error in user object`)
+            const result = await func(obj)
+            if (result.data) {
+                const { email, username, token } = result.data.user
+                dispatch(setUsersData({ email: email, username: username, token: token }))
+            } else if (result.error) {
+                const { data } = result.error
+
+                const arr = Object.entries(data.errors).map((elem) => elem.join(' '))
+                alert(arr)
+            }
             // const { token } = result.data.user
             // setUsersToken(token)
         } catch (err) {
@@ -52,17 +81,24 @@ export default function AuthWindow(props) {
         }
     }
 
+    // const { takeTokenNumber } = props
+    // const [loggedIn, setLoggedIn] = useState('false')
+    // const isLoggedIn = useSelector((state) => state.articlesState.isLoggedIn)
+    // const [f, { isError }] = usePostNewUserMutation({
+    //     user: {
+    //         username: josephgebbels
+    //         email: helloworld1488@gmail.com
+    //         password: 1234567890,
+    //     },
+    // })
+    if (isLoggedIn) {
+        return <Redirect to="/" />
+    }
     const { lever } = props
     if (lever) {
         return (
             <div className={classes.authWindow}>
-                <form
-                    method="POST"
-                    className={classes.authWindow__form}
-                    onSubmit={handleSubmit((data) => {
-                        console.log(data)
-                    })}
-                >
+                <form method="POST" className={classes.authWindow__form} onSubmit={handleSubmit(registerNewUser)}>
                     <h3 className={classes.authWindow__title}>Create new accout</h3>
                     <div className={classes.authWindow__field}>
                         <label htmlFor="userName" className={classes.authWindow__label}>
@@ -194,9 +230,10 @@ export default function AuthWindow(props) {
             </div>
         )
     }
+
     return (
         <div className={classes.authWindow}>
-            <form method="POST" className={classes.authWindow__form} onSubmit={handleSubmit(handleFunction)}>
+            <form method="POST" className={classes.authWindow__form} onSubmit={handleSubmit(logIn)}>
                 <h3 className={classes.authWindow__title}>Sign in</h3>
                 <div className={classes.authWindow__field}>
                     <label className={classes.authWindow__label} htmlFor="email">
