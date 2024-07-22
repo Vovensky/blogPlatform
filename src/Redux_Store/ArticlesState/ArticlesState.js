@@ -8,7 +8,6 @@ const articlesState = createSlice({
     },
     reducers: {
         setArticlesSet(state, action) {
-            console.log(`set redux`)
             const { articles } = action.payload
             const obj = {}
             articles.forEach((elem) => {

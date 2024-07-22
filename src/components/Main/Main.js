@@ -7,6 +7,7 @@ import classes from './Main.module.scss'
 import ArticlesList from '../ArticlesList/ArticlesList'
 import ArticleDetails from '../ArticlesList/ArticleDetails/ArticleDetails'
 import AuthWindow from '../HeadPanel/AuthWindow/AuthWindow'
+import Profile from '../HeadPanel/Profile/Profile'
 
 export default function Main() {
     const token = useSelector((state) => state.articlesState.token)
@@ -44,6 +45,9 @@ export default function Main() {
                 </Route>
                 <Route path="/sign-up">
                     <AuthWindow lever={true} />
+                </Route>
+                <Route path="/profile">
+                    <Profile />
                 </Route>
             </Switch>
         </main>
