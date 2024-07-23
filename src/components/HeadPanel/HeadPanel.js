@@ -1,13 +1,12 @@
-import { React, useEffect } from 'react'
+import { React } from 'react'
 import PropTypes from 'prop-types'
 import classes from './HeadPanel.module.scss'
-
+import UsersProfilePanel from './UsersProfilePanel/UsersProfilePanel'
 import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 
 export default function HeadPanel() {
     const { isLoggedIn, username } = useSelector((state) => state.articlesState)
-    console.log(isLoggedIn)
     if (!isLoggedIn) {
         return (
             <header className={classes.headPanel}>
@@ -28,9 +27,7 @@ export default function HeadPanel() {
             <Link to="/" className={classes.headPanel__link}>
                 Realworld Blog
             </Link>
-            <Link to="/profile" className={classes.headPanel__button}>
-                {username}
-            </Link>
+            <UsersProfilePanel {...username} />
         </header>
     )
 }

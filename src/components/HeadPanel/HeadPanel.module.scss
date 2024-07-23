@@ -58,3 +58,18 @@
 .headPanel__buttonLastChild {
     margin-right: 20px;
 }
+
+.headPanel__ProfileImage {
+    width: 46px;
+    height: 46px;
+}
+
+.headPanel__ProfileLink {
+    display: flex;
+    align-items: center;
+}
+
+.headPanel__profileName {
+    font-size: 18px;
+    line-height: 28px;
+}

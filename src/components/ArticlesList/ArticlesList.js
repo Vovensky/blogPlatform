@@ -1,6 +1,6 @@
 import { React, useEffect } from 'react'
 import PropTypes from 'prop-types'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { setArticlesSet } from '../../Redux_Store/ArticlesState/ArticlesState'
 import { useGetArticlesQuery } from '../../RTK_Qeury/RealWorldAPI'
 import Article from './Article/Article'
@@ -11,12 +11,15 @@ import classnames from './ArticlesList.module.scss'
 // import { usePostNewUserMutation } from '../../RTK_Qeury/RealWorldAPI'
 
 function ArticlesList({ history }) {
-    const token = useSelector((state) => state.articlesState.token)
+    // const token = useSelector((state) => state.articlesState.token)
     const dispatch = useDispatch()
     const { data, error, isError } = useGetArticlesQuery()
+    console.log(data)
     useEffect(() => {
-        return () => console.log('component was destructed')
-    }, [token, data, isError])
+        if (data) {
+            dispatch(setArticlesSet({ articlesData: data }))
+        }
+    }, [data, isError])
 
     if (isError) {
         return (
@@ -27,8 +30,8 @@ function ArticlesList({ history }) {
     } else if (!data) {
         return <div className={classnames.articlesError}>Данные не пришли</div>
     }
-    const { articles, articlesCount } = data
-    dispatch(setArticlesSet({ articles }))
+    const { articles } = data
+
     return (
         <div className={classnames.articlesList}>
             {articles.map((elem, index) => {

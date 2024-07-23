@@ -2,13 +2,14 @@ import React from 'react'
 import { useForm } from 'react-hook-form'
 import classes from './Profile.module.scss'
 import classess from '../AuthWindow/ModalWindow.module.scss'
+import { useSelector } from 'react-redux'
 
 export default function Profile() {
+    const { username, email } = useSelector((state) => state.articlesState)
     const {
         register,
         formState: { errors, isValid },
         handleSubmit,
-        getValues,
     } = useForm({ mode: 'onBlur' })
     return (
         <div className={classess.authWindow}>
@@ -27,6 +28,7 @@ export default function Profile() {
                         type="text"
                         name="userName"
                         id="userName"
+                        value={username}
                         placeholder="Enter userName"
                         {...register('userName', {
                             required: 'Поле обязательно к заполнению',
@@ -52,6 +54,7 @@ export default function Profile() {
                         type="email"
                         name="email"
                         id="email"
+                        value={email}
                         placeholder="Enter email"
                         {...register('email', {
                             requred: {

@@ -5,11 +5,14 @@
     display: flex;
     flex-direction: column;
     box-sizing: border-box;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .articleDetails__body {
     width: 100%;
     padding: 20px;
+    box-sizing: border-box;
 }
 
 .articleDetails__body img {

@@ -5,18 +5,22 @@ const articlesState = createSlice({
     initialState: {
         isLoggedIn: false,
         token: undefined,
+        username: false,
     },
     reducers: {
         setArticlesSet(state, action) {
-            const { articles } = action.payload
-            const obj = {}
-            articles.forEach((elem) => {
-                obj[elem.slug] = elem
-            })
-            return { ...state, articles: obj }
+            const { articles } = action.payload.articlesData
+            // articlesCount
+            if (articles) {
+                const obj = {}
+                articles.forEach((elem) => {
+                    obj[elem.slug] = elem
+                })
+                return { ...state, articles: obj }
+            }
+            return state
         },
         setUsersData(state, action) {
-            console.log(action)
             return {
                 ...state,
                 token: action.payload.token,

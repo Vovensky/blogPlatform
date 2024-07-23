@@ -11,7 +11,7 @@ function App() {
     function takeTokenNumber(tokenNumber) {
         dispatch(setUsersData(tokenNumber))
     }
-
+    console.log(localStorage.getItem('token'))
     return (
         <Router>
             <HeadPanel takeTokenNumber={takeTokenNumber} />

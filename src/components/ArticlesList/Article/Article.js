@@ -5,18 +5,19 @@ import Markdown from 'react-markdown'
 
 export default function Article(props) {
     const { articleInfo: article, onItemSelected } = props
-    const tags = article.tagList.map((elem, index) => (
+    const tags = article.tagList?.map((elem, index) => (
         <div key={index} className={classes.article__tag}>
             {elem}
         </div>
     ))
+    console.log(tags)
     return (
         <div className={classes.article}>
             <div className={classes.article__info}>
                 <div className={classes.article__title} onClick={() => onItemSelected(article.slug)}>
                     {article.title}
                 </div>
-                <div className={classes.article__tags}>{tags}</div>
+                <div className={classes.article__tags}>{tags || 'none tags'}</div>
 
                 <div className={classes.article__content}>
                     {' '}

@@ -6,8 +6,7 @@ export const RealWorldAPI = createApi({
     endpoints: (builder) => ({
         getArticles: builder.query({
             query: () => ({
-                url: 'articles?limit=15&offset=0',
-                limit: 5,
+                url: 'articles?limit=115&offset=0',
             }),
         }),
         getAccessToken: builder.query({
@@ -27,9 +26,22 @@ export const RealWorldAPI = createApi({
                 body,
             }),
         }),
+        getProfile: builder.query({
+            query: (user) => {
+                if (user) {
+                    return `/profiles/${user}`
+                } else
+                    return {
+                        data: {
+                            message: 'username not valid',
+                        },
+                    }
+            },
+        }),
     }),
 })
 
 // Export hooks for usage in functional components, which are
 // auto-generated based on the defined endpoints
-export const { useGetAccessTokenQuery, useGetArticlesQuery, usePostNewUserMutation, useLogInMutation } = RealWorldAPI
+export const { useGetAccessTokenQuery, useGetArticlesQuery, usePostNewUserMutation, useLogInMutation, useGetProfileQuery } =
+    RealWorldAPI

@@ -1,5 +1,5 @@
-import { React, useEffect } from 'react'
-import { useSelector } from 'react-redux'
+import { React } from 'react'
+// import { useSelector } from 'react-redux'
 import { Route, Switch } from 'react-router-dom'
 
 import classes from './Main.module.scss'
@@ -10,10 +10,7 @@ import AuthWindow from '../HeadPanel/AuthWindow/AuthWindow'
 import Profile from '../HeadPanel/Profile/Profile'
 
 export default function Main() {
-    const token = useSelector((state) => state.articlesState.token)
-    useEffect(() => {
-        console.log(`token updated`)
-    }, [token])
+    // const token = useSelector((state) => state.articlesState.token)
     // const [f, {data}] = usePostNewUserMutation({
     //     user: {
     //         username: 'zaloopa ivanovna',
