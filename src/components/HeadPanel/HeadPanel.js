@@ -6,8 +6,9 @@ import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 
 export default function HeadPanel() {
-    const { isLoggedIn, username } = useSelector((state) => state.articlesState)
-    if (!isLoggedIn) {
+    const { isLoggedIn } = useSelector((state) => state.articlesState)
+    const usersInfoData = sessionStorage.getItem('storageData')
+    if (!isLoggedIn && !usersInfoData) {
         return (
             <header className={classes.headPanel}>
                 <Link to="/" className={classes.headPanel__link}>
@@ -27,7 +28,7 @@ export default function HeadPanel() {
             <Link to="/" className={classes.headPanel__link}>
                 Realworld Blog
             </Link>
-            <UsersProfilePanel {...username} />
+            <UsersProfilePanel username={JSON.parse(usersInfoData)} />
         </header>
     )
 }

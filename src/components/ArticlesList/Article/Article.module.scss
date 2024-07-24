@@ -1,5 +1,5 @@
 .article {
-    width: 940px;
+    width: 100%;
     height: 140px;
     display: flex;
     background-color: white;
@@ -47,4 +47,8 @@
 
 .article__tag {
     border: 1px solid gray;
+}
+
+.articleDetailsContainer .article {
+    padding: 0;
 }

@@ -4,9 +4,14 @@ export const RealWorldAPI = createApi({
     reducerPath: 'RealWorld',
     baseQuery: fetchBaseQuery({ baseUrl: 'https://blog.kata.academy/api/' }),
     endpoints: (builder) => ({
+        getArticleDetails: builder.query({
+            query: (id) => ({
+                url: `articles/${id}`,
+            }),
+        }),
         getArticles: builder.query({
             query: () => ({
-                url: 'articles?limit=115&offset=0',
+                url: 'articles?limit=5&offset=0',
             }),
         }),
         getAccessToken: builder.query({
@@ -43,5 +48,11 @@ export const RealWorldAPI = createApi({
 
 // Export hooks for usage in functional components, which are
 // auto-generated based on the defined endpoints
-export const { useGetAccessTokenQuery, useGetArticlesQuery, usePostNewUserMutation, useLogInMutation, useGetProfileQuery } =
-    RealWorldAPI
+export const {
+    useGetAccessTokenQuery,
+    useGetArticlesQuery,
+    usePostNewUserMutation,
+    useLogInMutation,
+    useGetProfileQuery,
+    useGetArticleDetailsQuery,
+} = RealWorldAPI

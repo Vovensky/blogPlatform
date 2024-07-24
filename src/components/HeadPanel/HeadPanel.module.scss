@@ -42,6 +42,12 @@
     line-height: inherit;
     text-decoration: none;
     box-sizing: border-box;
+    border-radius: 5px;
+}
+
+.logOutButton {
+    border: 1px solid rgba(0, 0, 0, 0.75);
+    color: rgba(0, 0, 0, 0.75);
 }
 
 .headPanel__button:hover {
@@ -62,6 +68,7 @@
 .headPanel__ProfileImage {
     width: 46px;
     height: 46px;
+    border-radius: 50%;
 }
 
 .headPanel__ProfileLink {
@@ -72,4 +79,5 @@
 .headPanel__profileName {
     font-size: 18px;
     line-height: 28px;
+    margin-right: 10px;
 }

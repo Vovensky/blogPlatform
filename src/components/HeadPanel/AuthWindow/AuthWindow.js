@@ -1,4 +1,4 @@
-import { React, useState } from 'react'
+import { React } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { Link, Redirect } from 'react-router-dom'
 import PropTypes from 'prop-types'
@@ -33,13 +33,19 @@ export default function AuthWindow(props) {
                 username: username.toLowerCase(),
             },
         }
-        console.log(email, password, username)
         try {
             if (isError) console.log(`Error in user object`)
             console.log(error)
             const result = await f(obj)
             if (result.data) {
                 const { email, username, token } = result.data.user
+                const toStorage = {
+                    isLoggedIn,
+                    username,
+                    email,
+                    token,
+                }
+                sessionStorage.setItem('storageData', JSON.stringify(toStorage))
                 dispatch(setUsersData({ email: email, username: username, token: token }))
             } else if (result.error) {
                 const { data } = result.error
@@ -67,6 +73,13 @@ export default function AuthWindow(props) {
             const result = await func(obj)
             if (result.data) {
                 const { email, username, token } = result.data.user
+                const toStorage = {
+                    isLoggedIn,
+                    username,
+                    email,
+                    token,
+                }
+                sessionStorage.setItem('storageData', JSON.stringify(toStorage))
                 dispatch(setUsersData({ email: email, username: username, token: token }))
             } else if (result.error) {
                 const { data } = result.error
@@ -241,6 +254,7 @@ export default function AuthWindow(props) {
                     </label>{' '}
                     <br />
                     <input
+                        defaultValue="helloworld1488@gmail.com"
                         className={classes.authWindow__input}
                         type="email"
                         name="email"
@@ -261,10 +275,11 @@ export default function AuthWindow(props) {
                 </div>
                 <div className={classes.authWindow__field}>
                     <label className={classes.authWindow__label} htmlFor="password">
-                        Email address
+                        Пароль
                     </label>{' '}
                     <br />
                     <input
+                        defaultValue="1234567890"
                         className={classes.authWindow__input}
                         type="password"
                         name="password"

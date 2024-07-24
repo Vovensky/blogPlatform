@@ -8,8 +8,12 @@ import ArticlesList from '../ArticlesList/ArticlesList'
 import ArticleDetails from '../ArticlesList/ArticleDetails/ArticleDetails'
 import AuthWindow from '../HeadPanel/AuthWindow/AuthWindow'
 import Profile from '../HeadPanel/Profile/Profile'
+import { setUsersData } from '../../Redux_Store/ArticlesState/ArticlesState'
+import { useDispatch } from 'react-redux'
 
 export default function Main() {
+    const dispatch = useDispatch()
+    if (sessionStorage.getItem('storageData')) dispatch(setUsersData({ ...JSON.parse(sessionStorage.getItem('storageData')) }))
     // const token = useSelector((state) => state.articlesState.token)
     // const [f, {data}] = usePostNewUserMutation({
     //     user: {

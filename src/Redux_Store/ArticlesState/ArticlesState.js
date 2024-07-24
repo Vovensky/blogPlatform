@@ -8,6 +8,15 @@ const articlesState = createSlice({
         username: false,
     },
     reducers: {
+        resetData(state) {
+            return {
+                ...state,
+                isLoggedIn: false,
+                email: false,
+                username: false,
+                token: undefined,
+            }
+        },
         setArticlesSet(state, action) {
             const { articles } = action.payload.articlesData
             // articlesCount
@@ -32,5 +41,5 @@ const articlesState = createSlice({
     },
 })
 
-export const { setArticlesSet, setUsersData } = articlesState.actions
+export const { setArticlesSet, setUsersData, resetData } = articlesState.actions
 export default articlesState.reducer

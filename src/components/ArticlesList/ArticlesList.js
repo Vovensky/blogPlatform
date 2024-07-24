@@ -14,7 +14,7 @@ function ArticlesList({ history }) {
     // const token = useSelector((state) => state.articlesState.token)
     const dispatch = useDispatch()
     const { data, error, isError } = useGetArticlesQuery()
-    console.log(data)
+    // articlesCount
     useEffect(() => {
         if (data) {
             dispatch(setArticlesSet({ articlesData: data }))
@@ -35,6 +35,7 @@ function ArticlesList({ history }) {
     return (
         <div className={classnames.articlesList}>
             {articles.map((elem, index) => {
+                console.log(elem)
                 const hash = String(index)
                     .split('')
                     .reduce((sum, elem) => sum + elem, index)
