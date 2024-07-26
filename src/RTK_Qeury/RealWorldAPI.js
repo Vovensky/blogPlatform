@@ -2,7 +2,15 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
 export const RealWorldAPI = createApi({
     reducerPath: 'RealWorld',
-    baseQuery: fetchBaseQuery({ baseUrl: 'https://blog.kata.academy/api/' }),
+    baseQuery: fetchBaseQuery({
+        baseUrl: 'https://blog.kata.academy/api/',
+        prepareHeaders: (headers, { getState }) => {
+            console.log(headers)
+            const auth = getState().articlesState.token
+            headers.set('Authorization', `Token ${auth}`)
+            return headers
+        },
+    }),
     endpoints: (builder) => ({
         getArticleDetails: builder.query({
             query: (id) => ({
@@ -23,6 +31,16 @@ export const RealWorldAPI = createApi({
                 method: 'POST',
                 body,
             }),
+        }),
+        postNewArticle: builder.mutation({
+            query: (body) => {
+                return {
+                    url: 'articles',
+                    method: 'POST',
+                    headers: { 'content-type': 'application/json' },
+                    body,
+                }
+            },
         }),
         logIn: builder.mutation({
             query: (body) => ({
@@ -55,4 +73,5 @@ export const {
     useLogInMutation,
     useGetProfileQuery,
     useGetArticleDetailsQuery,
+    usePostNewArticleMutation,
 } = RealWorldAPI

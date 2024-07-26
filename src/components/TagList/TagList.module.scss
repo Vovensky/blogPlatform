@@ -1,0 +1,15 @@
+.CreateArticle__input {
+    width: 300px;
+    height: 40px;
+}
+
+.TagList {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    width: 100%;
+}
+
+.Tags__label:hover {
+    cursor: pointer;
+}

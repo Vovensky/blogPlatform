@@ -2,6 +2,7 @@ import { React } from 'react'
 import PropTypes from 'prop-types'
 import classes from './HeadPanel.module.scss'
 import UsersProfilePanel from './UsersProfilePanel/UsersProfilePanel'
+import { CreateArticleButton } from '../Buttons/Buttons'
 import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 
@@ -28,6 +29,7 @@ export default function HeadPanel() {
             <Link to="/" className={classes.headPanel__link}>
                 Realworld Blog
             </Link>
+            <CreateArticleButton />
             <UsersProfilePanel username={JSON.parse(usersInfoData)} />
         </header>
     )

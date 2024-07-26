@@ -9,7 +9,6 @@ import { useDispatch } from 'react-redux'
 export default function UsersProfilePanel(props) {
     const { data } = useGetProfileQuery(props.username.username)
     const dispatch = useDispatch()
-    console.log(props.username)
     return (
         <>
             <Link to="/profile" className={classes.headPanel__button}>
@@ -33,5 +32,5 @@ export default function UsersProfilePanel(props) {
 }
 
 UsersProfilePanel.propTypes = {
-    username: PropTypes.string,
+    username: PropTypes.object,
 }

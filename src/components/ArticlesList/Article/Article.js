@@ -2,10 +2,10 @@ import { React } from 'react'
 import PropTypes from 'prop-types'
 import classes from './Article.module.scss'
 import Markdown from 'react-markdown'
+import { Link } from 'react-router-dom'
 
 export default function Article(props) {
     const { articleInfo, onItemSelected } = props
-    console.log(props)
     let tags
     if (!articleInfo) return <div>Загружается</div>
     if (articleInfo.tagList?.length === 0) {
@@ -38,6 +38,9 @@ export default function Article(props) {
                 </div>
                 <img src={articleInfo.author.image} className={classes.userInfo__image} />
             </div>
+            <Link to={`/articles/${articleInfo.slug}/edit`}>
+                <button>Edit article</button>
+            </Link>
         </div>
     )
 }
