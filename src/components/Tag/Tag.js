@@ -4,12 +4,14 @@ import PropTypes from 'prop-types'
 import { CreateButton } from '../Buttons/Buttons'
 
 export default function Tag(props) {
-    const { addTag, onDelete, reference, index } = props
-    const [value, setValue] = React.useState('')
+    const { addTag, onDelete, index, maxIndex, value: defaultValue, setValue: setHOCValue } = props
+    const [value, setValue] = React.useState(defaultValue)
 
-    const addTagButton = addTag ? CreateButton({ message: 'Добавить тэг', mode: 'add', handler: addTag }) : null
+    const addTagButton =
+        addTag && Number(index) === maxIndex ? CreateButton({ message: 'Добавить тэг', mode: 'add', handler: addTag }) : null
+
     const deleteTagButton =
-        onDelete && index !== 0
+        onDelete && Number(index) !== 0
             ? CreateButton({
                   message: 'Удалить тэг',
                   mode: 'delete',
@@ -18,6 +20,7 @@ export default function Tag(props) {
                   value: value,
               })
             : null
+
     return (
         <>
             <div className={classes.TagContainer}>
@@ -27,10 +30,11 @@ export default function Tag(props) {
                     name="Tags"
                     id="Tags"
                     placeholder="Enter tagName"
-                    ref={reference}
-                    value={value}
+                    defaultValue={defaultValue}
                     onChange={(event) => setValue(event.target.value)}
-                    onBlur={(event) => props.parentRef.current.add(event.target.value.trim())}
+                    onBlur={(event) => {
+                        setHOCValue(event.target.value.trim(), index)
+                    }}
                 />
                 {addTagButton}
                 {deleteTagButton}

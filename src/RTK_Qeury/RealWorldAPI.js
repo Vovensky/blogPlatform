@@ -42,6 +42,18 @@ export const RealWorldAPI = createApi({
                 }
             },
         }),
+        changeArticle: builder.mutation({
+            query: (body, id) => {
+                console.log(body)
+                console.log(id)
+                return {
+                    url: `/articless/${id}`,
+                    method: 'POST',
+                    headers: { 'content-type': 'application/json' },
+                    body,
+                }
+            },
+        }),
         logIn: builder.mutation({
             query: (body) => ({
                 url: 'users/login',
@@ -74,4 +86,5 @@ export const {
     useGetProfileQuery,
     useGetArticleDetailsQuery,
     usePostNewArticleMutation,
+    useChangeArticleMutation,
 } = RealWorldAPI

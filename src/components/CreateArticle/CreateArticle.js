@@ -1,5 +1,5 @@
 import { React, useRef, useState } from 'react'
-import classes from './CreateArticle.module.scss'
+import classes from './ArticleForm.module.scss'
 import { useForm } from 'react-hook-form'
 import TagList from '../TagList/TagList'
 import { usePostNewArticleMutation } from '../../RTK_Qeury/RealWorldAPI'
@@ -15,15 +15,20 @@ export default function CreateArticle() {
         mode: 'onBlur',
     })
     const { isLoggedIn } = useSelector((state) => state.articlesState)
+
     const [upload, setUpLoad] = useState(false)
+
     const [errorStatus, setErrorStatus] = useState(false)
+
     const [f, { isError, error }] = usePostNewArticleMutation()
 
-    const parentRef = useRef(new Set())
+    const parentRef = useRef(new Map())
+
     async function finalState(data) {
-        parentRef.current.delete('')
-        data.tagList = [...parentRef.current]
+        data.tagList = [...parentRef.current.values()].filter((elem) => elem !== '')
+
         const obj = { article: data }
+        console.log(obj)
         try {
             const result = await f(JSON.stringify(obj))
             if (result.data) setUpLoad(result.data)
@@ -36,7 +41,6 @@ export default function CreateArticle() {
     }
 
     if (upload) return <Redirect to={`/articles/${upload.article.slug}`} />
-    else if (errorStatus) return <div>Error</div>
     else if (!isLoggedIn) return <Redirect to={`/`} />
 
     return (
@@ -95,7 +99,7 @@ export default function CreateArticle() {
                     />
                     <div className={classes.CreateArticle__error}>{errors?.text?.message}</div>
                 </div>
-                <TagList register={register} parentRef={parentRef} />
+                <TagList tagList={['']} />
                 <button
                     type="submit"
                     className={classes.CreateArticle__buttonSend}

@@ -13,14 +13,7 @@ export function CreateArticleButton() {
 export function CreateButton(options) {
     if (options.mode === 'delete')
         return (
-            <button
-                type="text"
-                onClick={() => {
-                    options.handler()
-                    options.parentRef.current.delete(options.value)
-                }}
-                className={classes.deleteButton}
-            >
+            <button type="text" onClick={options.handler} className={classes.deleteButton}>
                 {options.message}
             </button>
         )
