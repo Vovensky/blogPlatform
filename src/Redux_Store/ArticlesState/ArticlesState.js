@@ -36,6 +36,7 @@ const articlesState = createSlice({
                 isLoggedIn: true,
                 username: action.payload.username,
                 email: action.payload.email,
+                password: action.payload.password,
             }
         },
     },

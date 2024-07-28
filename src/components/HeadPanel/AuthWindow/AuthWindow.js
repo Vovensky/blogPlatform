@@ -22,7 +22,7 @@ export default function AuthWindow(props) {
 
     const dispatch = useDispatch()
 
-    const [f, { isError, error: riteError }] = usePostNewUserMutation()
+    const [f, { isError }] = usePostNewUserMutation()
 
     async function registerNewUser(data) {
         const { email, password, userName: username } = data
@@ -35,7 +35,6 @@ export default function AuthWindow(props) {
         }
         try {
             if (isError) console.log(`Error in user object`)
-            console.log(error)
             const result = await f(obj)
             if (result.data) {
                 const { email, username, token } = result.data.user
@@ -46,7 +45,7 @@ export default function AuthWindow(props) {
                     token,
                 }
                 sessionStorage.setItem('storageData', JSON.stringify(toStorage))
-                dispatch(setUsersData({ email: email, username: username, token: token }))
+                dispatch(setUsersData({ email: email, username: username, token: token, password: password }))
             } else if (result.error) {
                 const { data } = result.error
 
@@ -80,7 +79,7 @@ export default function AuthWindow(props) {
                     token,
                 }
                 sessionStorage.setItem('storageData', JSON.stringify(toStorage))
-                dispatch(setUsersData({ email: email, username: username, token: token }))
+                dispatch(setUsersData({ email: email, username: username, token: token, password: password.toLowerCase() }))
             } else if (result.error) {
                 const { data } = result.error
 
@@ -94,16 +93,6 @@ export default function AuthWindow(props) {
         }
     }
 
-    // const { takeTokenNumber } = props
-    // const [loggedIn, setLoggedIn] = useState('false')
-    // const isLoggedIn = useSelector((state) => state.articlesState.isLoggedIn)
-    // const [f, { isError }] = usePostNewUserMutation({
-    //     user: {
-    //         username: josephgebbels
-    //         email: helloworld1488@gmail.com
-    //         password: 1234567890,
-    //     },
-    // })
     if (isLoggedIn) {
         return <Redirect to="/" />
     }
@@ -254,7 +243,7 @@ export default function AuthWindow(props) {
                     </label>{' '}
                     <br />
                     <input
-                        defaultValue="helloworld1488@gmail.com"
+                        defaultValue="helloworld1337228@gmail.com"
                         className={classes.authWindow__input}
                         type="email"
                         name="email"

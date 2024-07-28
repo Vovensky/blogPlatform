@@ -6,16 +6,16 @@ import { useSelector } from 'react-redux'
 import { useUpdateUserMutation } from '../../../RTK_Qeury/RealWorldAPI'
 
 export default function Profile() {
-    const { username, email } = useSelector((state) => state.articlesState)
+    const { username, email, password } = useSelector((state) => state.articlesState)
     const {
         register,
         formState: { errors, isValid },
         handleSubmit,
     } = useForm({ mode: 'onBlur' })
-    const [f, { isError, error }] = useUpdateUserMutation()
+    const [f, { isError }] = useUpdateUserMutation()
 
     async function updateProfile(body) {
-        const result = await f({ user: body })
+        await f({ user: body })
         if (isError) {
             return <div>Произошла ошибка</div>
         }
@@ -80,17 +80,18 @@ export default function Profile() {
                 </div>
                 <div className={classess.authWindow__field}>
                     <label htmlFor="password" className={classes.authWindow__label}>
-                        New password
+                        Password
                     </label>{' '}
                     <br />
                     <input
                         className={classess.authWindow__input}
+                        defaultValue={password}
                         type="password"
                         name="password"
                         id="password"
                         placeholder="Enter password"
-                        {...register('bio', {
-                            required: 'Поле обязательно к заполнению',
+                        {...register('password', {
+                            required: 'Введи иначе сервер снесет пароль',
                             minLength: {
                                 value: 6,
                                 message: 'Не менее 6 символов',
@@ -122,7 +123,7 @@ export default function Profile() {
                         })}
                     />
                 </div>
-                <button type="submit" className={classess.authWindow__button}>
+                <button type="submit" className={classess.authWindow__button} disabled={!isValid}>
                     Save
                 </button>
             </form>
