@@ -1,16 +1,19 @@
-import { React, useEffect } from 'react'
+import { React, useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 import { useDispatch } from 'react-redux'
 import { setArticlesSet } from '../../Redux_Store/ArticlesState/ArticlesState'
 import { useGetArticlesQuery } from '../../RTK_Qeury/RealWorldAPI'
 import Article from './Article/Article'
 import { withRouter } from 'react-router-dom'
+import { Pagination } from 'antd'
 
 import classnames from './ArticlesList.module.scss'
 
 function ArticlesList({ history }) {
     const dispatch = useDispatch()
-    const { data, error, isError } = useGetArticlesQuery()
+    const [page, setPage] = useState(0)
+    const { data, error, isError } = useGetArticlesQuery(page)
+
     useEffect(() => {
         if (data) {
             dispatch(setArticlesSet({ articlesData: data }))
@@ -36,6 +39,13 @@ function ArticlesList({ history }) {
                     .reduce((sum, elem) => sum + elem, index)
                 return <Article articleInfo={elem} key={hash} onItemSelected={(slug) => history.push(`articles/${slug}`)} />
             })}
+            <Pagination
+                current={page}
+                showSizeChanger={false}
+                defaultPageSize={5}
+                total={data.articlesCount}
+                onChange={(page) => setPage(page)}
+            ></Pagination>
         </div>
     )
 }

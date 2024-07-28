@@ -1,4 +1,4 @@
-import { React, useRef, useState } from 'react'
+import { React, useState } from 'react'
 import classes from './ArticleForm.module.scss'
 import { useForm } from 'react-hook-form'
 import TagList from '../TagList/TagList'
@@ -7,6 +7,7 @@ import { Redirect } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 
 export default function CreateArticle() {
+    const [tagList, setTagList] = useState([''])
     const {
         register,
         handleSubmit,
@@ -15,20 +16,13 @@ export default function CreateArticle() {
         mode: 'onBlur',
     })
     const { isLoggedIn } = useSelector((state) => state.articlesState)
-
     const [upload, setUpLoad] = useState(false)
-
     const [errorStatus, setErrorStatus] = useState(false)
-
     const [f, { isError, error }] = usePostNewArticleMutation()
 
-    const parentRef = useRef(new Map())
-
-    async function finalState(data) {
-        data.tagList = [...parentRef.current.values()].filter((elem) => elem !== '')
-
+    async function upLoadFinalState(data) {
+        data.tagList = [...Object.values(tagList)].filter((elem) => elem !== '')
         const obj = { article: data }
-        console.log(obj)
         try {
             const result = await f(JSON.stringify(obj))
             if (result.data) setUpLoad(result.data)
@@ -36,7 +30,36 @@ export default function CreateArticle() {
                 setErrorStatus(error)
             }
         } catch (err) {
-            console.log(err)
+            return <div>{errorStatus}: произошла ошибка. Мы работаем над этим. </div>
+        }
+    }
+
+    function getActualTags(value, mode) {
+        if (mode === 'add') {
+            setTagList((state) => {
+                const maxIndex = Math.max.apply(null, Object.keys(state))
+                const tagList = {
+                    ...state,
+                    [maxIndex + 1]: '',
+                }
+                return {
+                    ...tagList,
+                }
+            })
+        } else if (mode === 'delete') {
+            setTagList((state) => {
+                delete state[value]
+                return {
+                    ...state,
+                }
+            })
+        } else {
+            setTagList((state) => {
+                return {
+                    ...state,
+                    [value.index]: value.value,
+                }
+            })
         }
     }
 
@@ -99,12 +122,12 @@ export default function CreateArticle() {
                     />
                     <div className={classes.CreateArticle__error}>{errors?.text?.message}</div>
                 </div>
-                <TagList tagList={['']} />
+                <TagList tagList={tagList} getActualTags={getActualTags} />
                 <button
-                    type="submit"
+                    type="button"
                     className={classes.CreateArticle__buttonSend}
-                    onClick={handleSubmit((data) => finalState(data))}
                     disabled={!isValid}
+                    onClick={handleSubmit(upLoadFinalState)}
                 >
                     Send
                 </button>

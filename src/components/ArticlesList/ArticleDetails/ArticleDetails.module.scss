@@ -3,7 +3,7 @@
 }
 .articleDetailsContainer {
     width: 940px;
-    height: 900px;
+    min-height: 100vh;
     background-color: white;
     display: flex;
     flex-direction: column;
@@ -21,7 +21,7 @@
 
 .articleDetails__body img {
     width: 300px;
-    height: 300px;
+    min-height: 300px;
 }
 
 .articleDetailsContainer .article {

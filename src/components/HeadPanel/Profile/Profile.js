@@ -3,6 +3,7 @@ import { useForm } from 'react-hook-form'
 import classes from './Profile.module.scss'
 import classess from '../AuthWindow/ModalWindow.module.scss'
 import { useSelector } from 'react-redux'
+import { useUpdateUserMutation } from '../../../RTK_Qeury/RealWorldAPI'
 
 export default function Profile() {
     const { username, email } = useSelector((state) => state.articlesState)
@@ -11,10 +12,18 @@ export default function Profile() {
         formState: { errors, isValid },
         handleSubmit,
     } = useForm({ mode: 'onBlur' })
+    const [f, { isError, error }] = useUpdateUserMutation()
+
+    async function updateProfile(body) {
+        const result = await f({ user: body })
+        if (isError) {
+            return <div>Произошла ошибка</div>
+        }
+    }
     return (
         <div className={classess.authWindow}>
             <form
-                onSubmit={handleSubmit((data) => console.log(data))}
+                onSubmit={handleSubmit(async (data) => updateProfile(data))}
                 className={`${classess.authWindow__form} + ${classes.profileWindow}`}
             >
                 <h3 className={classess.authWindow__title}>Edit profile</h3>
@@ -28,9 +37,9 @@ export default function Profile() {
                         type="text"
                         name="userName"
                         id="userName"
-                        value={username}
+                        defaultValue={username}
                         placeholder="Enter userName"
-                        {...register('userName', {
+                        {...register('username', {
                             required: 'Поле обязательно к заполнению',
                             minLength: {
                                 value: 3,
@@ -54,7 +63,7 @@ export default function Profile() {
                         type="email"
                         name="email"
                         id="email"
-                        value={email}
+                        defaultValue={email}
                         placeholder="Enter email"
                         {...register('email', {
                             requred: {
@@ -80,7 +89,7 @@ export default function Profile() {
                         name="password"
                         id="password"
                         placeholder="Enter password"
-                        {...register('password', {
+                        {...register('bio', {
                             required: 'Поле обязательно к заполнению',
                             minLength: {
                                 value: 6,
@@ -105,7 +114,7 @@ export default function Profile() {
                         name="url"
                         id="url"
                         placeholder="image url"
-                        {...register('passwordValidator', {
+                        {...register('image', {
                             pattern: {
                                 value: /^((http|https|ftp):\/\/)?(([A-Z0-9][A-Z0-9_-]*)(\.[A-Z0-9][A-Z0-9_-]*)+)/i,
                                 message: 'Не соблюден формат url',

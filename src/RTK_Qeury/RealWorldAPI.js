@@ -4,24 +4,32 @@ export const RealWorldAPI = createApi({
     reducerPath: 'RealWorld',
     baseQuery: fetchBaseQuery({
         baseUrl: 'https://blog.kata.academy/api/',
+
         prepareHeaders: (headers, { getState }) => {
-            console.log(headers)
             const auth = getState().articlesState.token
             headers.set('Authorization', `Token ${auth}`)
             return headers
         },
     }),
+    tagTypes: ['Article', 'POST', 'Articles'],
     endpoints: (builder) => ({
         getArticleDetails: builder.query({
             query: (id) => ({
                 url: `articles/${id}`,
             }),
+            providesTags: ['Articles'],
         }),
         getArticles: builder.query({
-            query: () => ({
-                url: 'articles?limit=5&offset=0',
-            }),
+            query: (offset) => {
+                let skip = offset
+                if (!skip) skip = 0
+                return {
+                    url: `articles?limit=5&offset=${skip}`,
+                }
+            },
+            providesTags: ['Articles'],
         }),
+
         getAccessToken: builder.query({
             query: () => `users`,
         }),
@@ -41,18 +49,28 @@ export const RealWorldAPI = createApi({
                     body,
                 }
             },
+            invalidatesTags: ['Articles'],
         }),
         changeArticle: builder.mutation({
-            query: (body, id) => {
-                console.log(body)
-                console.log(id)
+            query: ({ article, id }) => {
+                const body = { article: article }
                 return {
-                    url: `/articless/${id}`,
-                    method: 'POST',
+                    url: `/articles/${id}`,
+                    method: 'PUT',
                     headers: { 'content-type': 'application/json' },
-                    body,
+                    body: JSON.stringify(body),
                 }
             },
+            invalidatesTags: (result) => [{ type: 'Articles', id: result.article.id }],
+        }),
+        deleteArticle: builder.mutation({
+            query: (id) => {
+                return {
+                    url: `/articles/${id}`,
+                    method: 'DELETE',
+                }
+            },
+            invalidatesTags: ['Articles'],
         }),
         logIn: builder.mutation({
             query: (body) => ({
@@ -73,6 +91,35 @@ export const RealWorldAPI = createApi({
                     }
             },
         }),
+        updateUser: builder.mutation({
+            query: (body) => {
+                console.log(body)
+                return {
+                    url: '/user',
+                    method: 'PUT',
+                    headers: { 'content-type': 'application/json' },
+                    body: body,
+                }
+            },
+        }),
+        favoriteAnArticle: builder.mutation({
+            query: (body) => {
+                return {
+                    url: `/articles/${body}/favorite`,
+                    method: 'POST',
+                }
+            },
+            invalidatesTags: ['Articles'],
+        }),
+        unFavoriteAnArticle: builder.mutation({
+            query: (body) => {
+                return {
+                    url: `/articles/${body}/favorite`,
+                    method: 'DELETE',
+                }
+            },
+            invalidatesTags: ['Articles'],
+        }),
     }),
 })
 
@@ -87,4 +134,8 @@ export const {
     useGetArticleDetailsQuery,
     usePostNewArticleMutation,
     useChangeArticleMutation,
+    useDeleteArticleMutation,
+    useUpdateUserMutation,
+    useFavoriteAnArticleMutation,
+    useUnFavoriteAnArticleMutation,
 } = RealWorldAPI

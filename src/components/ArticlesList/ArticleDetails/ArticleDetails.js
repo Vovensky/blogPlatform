@@ -9,7 +9,7 @@ import classes from './ArticleDetails.module.scss'
 export default function ArticleDetails(props) {
     let { slug } = props.params
     if (!slug) slug = window.location.pathname.split('/')[2]
-    const { data } = useGetArticleDetailsQuery(slug)
+    const { data } = useGetArticleDetailsQuery(slug, { refetchOnFocus: true })
     if (data) {
         return (
             <div className={classes.articleDetailsWrapper}>

@@ -8,18 +8,23 @@
     box-sizing: border-box;
 }
 
+.articleGroup {
+    margin-left: auto;
+}
+
 .article__info {
     flex-grow: 3;
     max-width: 680px;
 }
 
-.article__userInfo {
+.articleGroup__userInfo {
     flex-grow: 1;
     display: flex;
     justify-content: end;
     font-size: 18px;
     font-weight: 400;
     line-height: 28px;
+    margin-left: auto;
 }
 
 .userInfo__image {
@@ -34,6 +39,12 @@
     height: 28px;
     font-size: 20px;
     line-height: 28px;
+}
+.userInfo__authorName {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
 .article__content {
@@ -51,4 +62,74 @@
 
 .articleDetailsContainer .article {
     padding: 0;
+}
+
+.userInfo__postDate {
+    font-size: 12px;
+    color: rgba(0, 0, 0, 0.5);
+    position: relative;
+    top: -6px;
+}
+
+.userInfo__userName {
+    font-size: 18px;
+    line-height: 28px;
+}
+
+.articleGroup__buttons {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.articleGroup__button {
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 20px;
+    font-size: 14px;
+    border: 1px solid;
+    border-radius: 5px;
+    text-decoration: none;
+    background-color: white;
+}
+
+.change {
+    border-color: rgba(82, 196, 26, 1);
+    color: rgba(82, 196, 26, 1);
+}
+
+.delete {
+    border-color: rgba(245, 34, 45, 1);
+    color: rgba(245, 34, 45, 1);
+}
+
+a {
+    text-decoration: none;
+}
+
+a:visited {
+    color: inherit;
+}
+
+.article__likes {
+    margin-left: 25px;
+    color: black;
+    border-radius: 50px;
+}
+
+.article__likesCount {
+    margin-left: 10px;
+    color: black;
+}
+
+.article__heart {
+    width: 16px;
+    height: 16px;
+}
+
+.article__heartLiked {
+    background-color: red;
 }

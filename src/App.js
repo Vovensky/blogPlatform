@@ -5,6 +5,7 @@ import './App.css'
 import { useDispatch } from 'react-redux'
 import { setUsersData } from './Redux_Store/ArticlesState/ArticlesState'
 import { BrowserRouter as Router } from 'react-router-dom'
+import { ConfigProvider } from 'antd'
 
 function App() {
     const dispatch = useDispatch()
@@ -13,10 +14,22 @@ function App() {
     }
     console.log(localStorage.getItem('token'))
     return (
-        <Router>
-            <HeadPanel takeTokenNumber={takeTokenNumber} />
-            <Main />
-        </Router>
+        <ConfigProvider
+            theme={{
+                components: {
+                    Pagination: {
+                        itemActiveBg: 'rgba(24, 144, 255, 1)',
+                        colorPrimary: 'white',
+                        colorBgContainer: 'inherit',
+                    },
+                },
+            }}
+        >
+            <Router>
+                <HeadPanel takeTokenNumber={takeTokenNumber} />
+                <Main />
+            </Router>
+        </ConfigProvider>
     )
 }
 

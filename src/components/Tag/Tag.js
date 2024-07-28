@@ -28,7 +28,7 @@ export default function Tag(props) {
                     className={classes.Tag__input}
                     type="text"
                     name="Tags"
-                    id="Tags"
+                    id={`Tags${index}`}
                     placeholder="Enter tagName"
                     defaultValue={defaultValue}
                     onChange={(event) => setValue(event.target.value)}
@@ -48,5 +48,5 @@ Tag.propTypes = {
     onDelete: PropTypes.func,
     addTag: PropTypes.func,
     parentRef: PropTypes.object,
-    index: PropTypes.number,
+    index: PropTypes.string,
 }
