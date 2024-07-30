@@ -21,10 +21,10 @@ export const RealWorldAPI = createApi({
         }),
         getArticles: builder.query({
             query: (offset) => {
-                let skip = offset
-                if (!skip) skip = 0
+                let skip = offset - 1
+                if (!skip || skip < 0) skip = 0
                 return {
-                    url: `articles?limit=5&offset=${skip}`,
+                    url: `articles?limit=5&offset=${skip * 5}`,
                 }
             },
             providesTags: ['Articles'],
