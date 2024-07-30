@@ -160,13 +160,21 @@ export default function EditArticle(props) {
                     <textarea
                         defaultValue={data.article.body}
                         className={classes.CreateArticle__textArea}
+                        maxLength="2000"
                         type="text"
                         name="text"
                         id="text"
-                        maxLength="300"
                         placeholder="Enter situation"
                         {...register('body', {
                             required: 'Поле обязательно к заполнению',
+                            maxLength: {
+                                value: 2000,
+                                message: 'Не более 2к символов',
+                            },
+                            minLength: {
+                                value: 30,
+                                message: 'не менее 10 символов',
+                            },
                         })}
                     />
                     <div className={classes.CreateArticle__error}>{errors?.text?.message}</div>

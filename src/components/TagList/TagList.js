@@ -1,4 +1,4 @@
-import { React, useState, useEffect } from 'react'
+import { React } from 'react'
 import classes from './TagList.module.scss'
 import Tag from '../Tag/Tag'
 import PropTypes from 'prop-types'
@@ -8,12 +8,15 @@ export default function TagList(props) {
 
     function createTags(arr) {
         const maxIndex = Math.max.apply(null, Object.keys(arr))
-        return Object.entries(arr).map(([key, value]) => {
+        return Object.entries(arr).map(([key, value], index) => {
+            let lever = false
+            if (index === 3) lever = true
             const hash = String(key + key) + key
             return (
                 <Tag
                     index={key}
                     value={value}
+                    lever={lever}
                     maxIndex={maxIndex}
                     key={hash}
                     addTag={() => addTag()}
@@ -46,6 +49,6 @@ export default function TagList(props) {
 
 TagList.propTypes = {
     parentRef: PropTypes.object,
-    tagList: PropTypes.object,
+    tagList: PropTypes.array,
     getActualTags: PropTypes.func,
 }

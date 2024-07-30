@@ -4,11 +4,13 @@ import PropTypes from 'prop-types'
 import { CreateButton } from '../Buttons/Buttons'
 
 export default function Tag(props) {
-    const { addTag, onDelete, index, maxIndex, value: defaultValue, setValue: setHOCValue } = props
+    const { addTag, onDelete, index, maxIndex, value: defaultValue, setValue: setHOCValue, lever } = props
     const [value, setValue] = React.useState(defaultValue)
 
     const addTagButton =
-        addTag && Number(index) === maxIndex ? CreateButton({ message: 'Добавить тэг', mode: 'add', handler: addTag }) : null
+        addTag && Number(index) === maxIndex
+            ? CreateButton({ message: 'Добавить тэг', mode: 'add', handler: addTag, lever: lever })
+            : null
 
     const deleteTagButton =
         onDelete && Number(index) !== 0
@@ -16,7 +18,6 @@ export default function Tag(props) {
                   message: 'Удалить тэг',
                   mode: 'delete',
                   handler: onDelete,
-                  parentRef: props.parentRef,
                   value: value,
               })
             : null
@@ -26,6 +27,7 @@ export default function Tag(props) {
             <div className={classes.TagContainer}>
                 <input
                     className={classes.Tag__input}
+                    maxLength={25}
                     type="text"
                     name="Tags"
                     id={`Tags${index}`}
@@ -49,4 +51,8 @@ Tag.propTypes = {
     addTag: PropTypes.func,
     parentRef: PropTypes.object,
     index: PropTypes.string,
+    maxIndex: PropTypes.number,
+    setValue: PropTypes.func,
+    value: PropTypes.string,
+    lever: PropTypes.bool,
 }
