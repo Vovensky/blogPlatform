@@ -9,14 +9,14 @@ export default function TagList(props) {
     function createTags(arr) {
         const maxIndex = Math.max.apply(null, Object.keys(arr))
         return Object.entries(arr).map(([key, value], index) => {
-            let lever = false
-            if (index === 3) lever = true
+            let leverr = false
+            if (index === 3) leverr = true
             const hash = String(key + key) + key
             return (
                 <Tag
                     index={key}
                     value={value}
-                    lever={lever}
+                    lever={leverr}
                     maxIndex={maxIndex}
                     key={hash}
                     addTag={() => addTag()}
