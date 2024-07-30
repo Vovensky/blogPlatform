@@ -10,13 +10,14 @@
     box-sizing: border-box;
     margin-left: auto;
     margin-right: auto;
-    padding: 20px;
 }
 
 .articleDetails__body {
     width: 100%;
     padding: 20px;
     box-sizing: border-box;
+    word-break: break-all;
+    padding-top: 0px;
 }
 
 .articleDetails__body img {

@@ -17,10 +17,20 @@ export function CreateButton(options) {
                 {options.message}
             </button>
         )
-    else if (options.mode === 'add')
+    else if (options.mode === 'add') {
+        console.log(options)
+        if (options.lever === true) {
+            console.log(options.lever)
+            return (
+                <button type="text" onClick={options.handler} className={classes.addButton} disabled={true}>
+                    {options.message}
+                </button>
+            )
+        }
         return (
             <button type="text" onClick={options.handler} className={classes.addButton}>
                 {options.message}
             </button>
         )
+    }
 }
