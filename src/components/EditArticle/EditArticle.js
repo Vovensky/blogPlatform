@@ -177,7 +177,7 @@ export default function EditArticle(props) {
                             },
                         })}
                     />
-                    <div className={classes.CreateArticle__error}>{errors?.text?.message}</div>
+                    <div className={classes.CreateArticle__error}>{errors?.body?.message}</div>
                 </div>
                 <TagList tagList={tagList} getActualTags={getActualTags} />
                 <button

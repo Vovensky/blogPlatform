@@ -27,6 +27,12 @@
     width: 100%;
 }
 
+.CreateArticle__error {
+    color: red;
+    font-size: 14px;
+    line-height: 22px;
+}
+
 .CreateArticle__buttonSend {
     background-color: rgba(24, 144, 255, 1);
     width: 320px;
