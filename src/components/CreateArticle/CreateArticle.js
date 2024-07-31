@@ -123,12 +123,12 @@ export default function CreateArticle() {
                                 message: 'Не более 2к символов',
                             },
                             minLength: {
-                                value: 10,
+                                value: 30,
                                 message: 'не менее 30 символов',
                             },
                         })}
                     />
-                    <div className={classes.CreateArticle__error}>{errors?.text?.message}</div>
+                    <div className={classes.CreateArticle__error}>{errors?.body?.message}</div>
                 </div>
                 <TagList tagList={tagList} getActualTags={getActualTags} />
                 <button

@@ -173,7 +173,7 @@ export default function EditArticle(props) {
                             },
                             minLength: {
                                 value: 30,
-                                message: 'не менее 10 символов',
+                                message: 'не менее 30 символов',
                             },
                         })}
                     />
