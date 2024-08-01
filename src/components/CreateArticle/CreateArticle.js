@@ -21,8 +21,20 @@ export default function CreateArticle() {
     const [f, { isError, error }] = usePostNewArticleMutation()
 
     async function upLoadFinalState(data) {
-        data.tagList = [...Object.values(tagList)].filter((elem) => elem !== '')
-        const obj = { article: data }
+        const formattedData = Object.fromEntries(
+            Object.entries(data).map(([key, value]) => {
+                return [
+                    key,
+                    value
+                        .trim()
+                        .split(' ')
+                        .filter((elem) => elem !== '')
+                        .join(' '),
+                ]
+            }),
+        )
+        formattedData.tagList = [...Object.values(tagList)].filter((elem) => elem !== '')
+        const obj = { article: formattedData }
         try {
             const result = await f(JSON.stringify(obj))
             if (result.data) setUpLoad(result.data)
@@ -83,6 +95,16 @@ export default function CreateArticle() {
                         placeholder="Enter articles title"
                         {...register('title', {
                             required: 'Поле обязательно к заполнению',
+                            validate: {
+                                positive: (v) => {
+                                    const formatString = v
+                                        .trim()
+                                        .split(' ')
+                                        .filter((elem) => elem !== '')
+                                        .join(' ')
+                                    return formatString.length > 0 || 'Укажите тему'
+                                },
+                            },
                         })}
                     />
                     <div className={classes.CreateArticle__error}>{errors?.title?.message}</div>
@@ -100,6 +122,16 @@ export default function CreateArticle() {
                         placeholder="Enter artciels description"
                         {...register('description', {
                             required: 'Поле обязательно к заполнению',
+                            validate: {
+                                positive: (v) => {
+                                    const formatString = v
+                                        .trim()
+                                        .split(' ')
+                                        .filter((elem) => elem !== '')
+                                        .join(' ')
+                                    return formatString.length > 0 || 'Укажите описание'
+                                },
+                            },
                         })}
                     />
                     <div className={classes.CreateArticle__error}>{errors?.description?.message}</div>
@@ -124,7 +156,17 @@ export default function CreateArticle() {
                             },
                             minLength: {
                                 value: 30,
-                                message: 'не менее 30 символов',
+                                message: 'Не менее 30 символов',
+                            },
+                            validate: {
+                                positive: (v) => {
+                                    const formatString = v
+                                        .trim()
+                                        .split(' ')
+                                        .filter((elem) => elem !== '')
+                                        .join(' ')
+                                    return formatString.length > 30 || 'Не менее 30 символов'
+                                },
                             },
                         })}
                     />

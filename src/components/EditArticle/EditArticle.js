@@ -78,8 +78,20 @@ export default function EditArticle(props) {
     }
 
     async function upLoadFinalState(data) {
-        data.tagList = [...Object.values(tagList)].filter((elem) => elem !== '')
-        const obj = { article: data, id: slug }
+        const formattedData = Object.fromEntries(
+            Object.entries(data).map(([key, value]) => {
+                return [
+                    key,
+                    value
+                        .trim()
+                        .split(' ')
+                        .filter((elem) => elem !== '')
+                        .join(' '),
+                ]
+            }),
+        )
+        formattedData.tagList = [...Object.values(tagList)].filter((elem) => elem !== '')
+        const obj = { article: formattedData, id: slug }
         try {
             const result = await f(obj, slug)
             if (result.data) {
@@ -130,6 +142,16 @@ export default function EditArticle(props) {
                         placeholder="Enter articles title"
                         {...register('title', {
                             required: 'Поле обязательно к заполнению',
+                            validate: {
+                                positive: (v) => {
+                                    const formatString = v
+                                        .trim()
+                                        .split(' ')
+                                        .filter((elem) => elem !== '')
+                                        .join(' ')
+                                    return formatString.length > 0 || 'Укажите тему'
+                                },
+                            },
                         })}
                     />
                     <div className={classes.CreateArticle__error}>{errors?.title?.message}</div>
@@ -148,6 +170,16 @@ export default function EditArticle(props) {
                         placeholder="Enter artciels description"
                         {...register('description', {
                             required: 'Поле обязательно к заполнению',
+                            validate: {
+                                positive: (v) => {
+                                    const formatString = v
+                                        .trim()
+                                        .split(' ')
+                                        .filter((elem) => elem !== '')
+                                        .join(' ')
+                                    return formatString.length > 0 || 'Укажите описание'
+                                },
+                            },
                         })}
                     />
                     <div className={classes.CreateArticle__error}>{errors?.description?.message}</div>
@@ -174,6 +206,16 @@ export default function EditArticle(props) {
                             minLength: {
                                 value: 30,
                                 message: 'не менее 30 символов',
+                            },
+                            validate: {
+                                positive: (v) => {
+                                    const formatString = v
+                                        .trim()
+                                        .split(' ')
+                                        .filter((elem) => elem !== '')
+                                        .join(' ')
+                                    return formatString.length > 30 || 'Не менее 30 символов'
+                                },
                             },
                         })}
                     />
