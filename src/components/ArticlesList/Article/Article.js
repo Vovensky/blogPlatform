@@ -16,7 +16,7 @@ import svg from '../../../svg.svg'
 import redSvg from '../../../svgRed.svg'
 
 export default function Article(props) {
-    const { articleInfo, onItemSelected } = props
+    const { articleInfo, onItemSelected, lever } = props
 
     const [isDeleted, setDeleted] = React.useState(false)
     let tags
@@ -53,7 +53,7 @@ export default function Article(props) {
     }
     let buttons
     let likes
-    if (articleInfo.author.username === username) {
+    if (articleInfo.author.username === username && lever) {
         buttons = (
             <div className={classes.articleGroup__buttons}>
                 <Link to={`/articles/${articleInfo.slug}/edit`}>
@@ -131,4 +131,5 @@ Article.propTypes = {
     articleInfo: PropTypes.object,
     onItemSelected: PropTypes.func,
     favoritesCount: PropTypes.number,
+    lever: PropTypes.bool,
 }

@@ -14,7 +14,7 @@ export default function ArticleDetails(props) {
         return (
             <div className={classes.articleDetailsWrapper}>
                 <div className={classes.articleDetailsContainer}>
-                    <Article articleInfo={data.article} onItemSelected={() => {}} />
+                    <Article articleInfo={data.article} lever={true} onItemSelected={() => {}} />
                     <div className={classes.articleDetails__body}>
                         <Markdown>{data.article.body}</Markdown>
                     </div>

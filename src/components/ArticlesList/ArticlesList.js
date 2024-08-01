@@ -38,7 +38,14 @@ function ArticlesList({ history }) {
                 const hash = String(index)
                     .split('')
                     .reduce((sum, elem) => sum + elem, index)
-                return <Article articleInfo={elem} key={hash} onItemSelected={(slug) => history.push(`articles/${slug}`)} />
+                return (
+                    <Article
+                        articleInfo={elem}
+                        key={hash}
+                        onItemSelected={(slug) => history.push(`articles/${slug}`)}
+                        lever={false}
+                    />
+                )
             })}
             <Pagination
                 current={optionalPage}
