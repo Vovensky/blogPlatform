@@ -18,7 +18,6 @@ export function CreateButton(options) {
             </button>
         )
     else if (options.mode === 'add') {
-        console.log(options)
         if (options.lever === true) {
             console.log(options.lever)
             return (

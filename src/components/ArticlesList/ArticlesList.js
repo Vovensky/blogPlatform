@@ -12,7 +12,8 @@ import classnames from './ArticlesList.module.scss'
 function ArticlesList({ history }) {
     const dispatch = useDispatch()
     const [page, setPage] = useState(0)
-    const { data, error, isError } = useGetArticlesQuery(page)
+    const optionalPage = sessionStorage.getItem('page') > page ? sessionStorage.getItem('page') : page
+    const { data, error, isError } = useGetArticlesQuery(optionalPage)
 
     useEffect(() => {
         if (data) {
@@ -40,11 +41,14 @@ function ArticlesList({ history }) {
                 return <Article articleInfo={elem} key={hash} onItemSelected={(slug) => history.push(`articles/${slug}`)} />
             })}
             <Pagination
-                current={page}
+                current={optionalPage}
                 showSizeChanger={false}
                 defaultPageSize={5}
                 total={data.articlesCount}
-                onChange={(page) => setPage(page)}
+                onChange={(page) => {
+                    sessionStorage.setItem('page', page)
+                    setPage(page)
+                }}
             ></Pagination>
         </div>
     )

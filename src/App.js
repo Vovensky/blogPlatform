@@ -12,7 +12,6 @@ function App() {
     function takeTokenNumber(tokenNumber) {
         dispatch(setUsersData(tokenNumber))
     }
-    console.log(localStorage.getItem('token'))
     return (
         <ConfigProvider
             theme={{

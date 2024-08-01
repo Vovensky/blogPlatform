@@ -6,6 +6,7 @@ const articlesState = createSlice({
         isLoggedIn: false,
         token: undefined,
         username: false,
+        page: 1,
     },
     reducers: {
         resetData(state) {
@@ -19,7 +20,6 @@ const articlesState = createSlice({
         },
         setArticlesSet(state, action) {
             const { articles } = action.payload.articlesData
-            // articlesCount
             if (articles) {
                 const obj = {}
                 articles.forEach((elem) => {
@@ -39,8 +39,14 @@ const articlesState = createSlice({
                 password: action.payload.password,
             }
         },
+        setPage(state, action) {
+            return {
+                ...state,
+                page: action.payload.page,
+            }
+        },
     },
 })
 
-export const { setArticlesSet, setUsersData, resetData } = articlesState.actions
+export const { setArticlesSet, setUsersData, resetData, setPage } = articlesState.actions
 export default articlesState.reducer
